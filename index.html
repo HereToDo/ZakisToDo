@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<link rel="manifest" href="manifest.json">
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js")
+      .then(() => console.log("Service Worker registriert"))
+      .catch((err) => console.error("Fehler beim Registrieren des Service Workers:", err));
+  }
+</script>
+
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>ToDo-Liste-App</title>
+    <style>
+        /* Einfache Gestaltung für die Liste */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        // Funktion zum Hinzufügen von Aufgaben
+        function einfügen() {
+            var eingabe = document.getElementById("taskInput").value;
+            if (eingabe.trim() !== "") {
+                var ul = document.getElementById("taskList");
+                var li = document.createElement("li");
+
+                // Text der Aufgabe hinzufügen
+                li.textContent = eingabe;
+
+                // Löschen-Button erstellen
+                var deleteButton = document.createElement("button");
+                deleteButton.textContent = "Löschen";
+                deleteButton.onclick = function() {
+                    ul.removeChild(li);
+                };
+
+                // Löschen-Button zur Aufgabe hinzufügen
+                li.appendChild(deleteButton);
+
+                // Aufgabe zur Liste hinzufügen
+                ul.appendChild(li);
+
+                // Eingabefeld nach dem Hinzufügen leeren
+                document.getElementById("taskInput").value = "";
+            } else {
+                alert("Bitte eine Aufgabe eingeben!");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>ToDo-Liste für die Hochzeit</h1>
+    <p>Gib eine Aufgabe ein und klicke auf "Einfügen", um sie hinzuzufügen.</p>
+    <br/>
+    <input type="text" id="taskInput" placeholder="Aufgabe eintippen"/>
+    <br/>
+    <input type="button" value="Einfügen" onclick="einfügen();"/>
+    <br/>
+    <h2>Aufgabenliste:</h2>
+    <ul id="taskList">
+        <!-- Hier werden die Aufgaben erscheinen -->
+    </ul>
+</body>
+</html>
+
+
+
